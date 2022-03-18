@@ -9,7 +9,7 @@ float sign(float a) { return  a > 0.f ? 1.f : -1.f; }
 void Projectile::Update() {
 	if (!alive) {
 		x = player.x;
-		y = player.y - 14.f;
+		y = player.y - player.h / 2;
 		return;
 	}
 	if (!step(velocityX * deltaTime, 0.f)) {
@@ -21,17 +21,14 @@ void Projectile::Update() {
 }
 
 void Projectile::Draw() {
-	//if (!alive) {
-	//	return;
-	//}
-	SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
-	SDL_Rect rect = { (int)x - 4, (int)y - 4, 8, 8 };
-
-	SDL_RenderFillRect(render, &rect);
+	if (projectile.alive) {
+		animTime += deltaTime;
+	}
+	ballSpriteSheet.Draw((int)(animTime * 7) % 2, x - (w / 2), y - r);
 }
 
 bool Projectile::step(float deltaX, float deltaY) {
-	Circle circle = { x + deltaX, y + deltaY, 4 };
+	Circle circle = { x + deltaX, y + deltaY, r };
 	for (int i = 0; i < allBricks.size(); i++) {
 		TheBrick& brick = *allBricks[i];
 		if (!brick.GetBrick().alive) {

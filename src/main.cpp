@@ -11,26 +11,30 @@
 int main() {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	TTF_Init();
-	//IMG_Init();
-	window = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, 0);
-	render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	//SpriteSheet cow;
-	//cow.Load("", 112, 112);
+	IMG_Init(1);
 
-	//playerSprite.Load("");	
-	 
-	TTF_Font* font = TTF_OpenFont("res/roboto.ttf", 14);
-	SDL_Surface* gameOverTextSurface = TTF_RenderText_Solid(font, "Yeah yeah, you suck bawl bruh", {255, 255, 255, 255});
+	window = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screenWidth, screenHeight, 0);
+	render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	blockSheet.Load("res/blockSheet.png", 40, 20);
+
+	playerSprite.Load("res/playerSprite.png");	
+	playerSprite.w = player.w;
+	playerSprite.h = player.h;
+
+	ballSpriteSheet.Load("res/carrotChanSheet.png", 32, 64);
+
+	TTF_Font* font = TTF_OpenFont("res/roboto.ttf", 24);
+	SDL_Surface* gameOverTextSurface = TTF_RenderText_Solid(font, "Maaan, you suck bawls bruh", {255, 255, 255, 255});
 	SDL_Texture* gameOverTextTexture = SDL_CreateTextureFromSurface(render, gameOverTextSurface); 	
 	
 	SDL_Surface* victoryTextSurface = TTF_RenderText_Solid(font, "Eh, it's okay", {255, 255, 255, 255});
 	SDL_Texture* victoryTextTexture = SDL_CreateTextureFromSurface(render, victoryTextSurface);
 
+	SDL_Surface* startTextSurface = TTF_RenderText_Solid(font, "Press space to restart", { 255, 255, 255, 255 });
+	SDL_Texture* startTextTexture = SDL_CreateTextureFromSurface(render, startTextSurface);
 
 	std::array<std::array<GridTile, gridSizeY>, gridSizeX> theGrid = gridHandler.CreateGrid();
 	CreateLevel(theGrid);
-
-	float animTime = 0.f;
 
 	Uint64 previous_ticks = SDL_GetPerformanceCounter();
 	bool running = true;
@@ -71,7 +75,7 @@ int main() {
 		}
 
 		if (gameOver) {
-			SDL_Rect gameOverTextDst = { screenWidth / 2, screenHeight / 2, gameOverTextSurface->w, gameOverTextSurface->h };
+			SDL_Rect gameOverTextDst = { screenWidth / 3, screenHeight / 2, gameOverTextSurface->w, gameOverTextSurface->h };
 			DrawText(gameOverTextTexture, NULL, gameOverTextDst);
 			if (GetKeyPressed(SDL_SCANCODE_SPACE)) {
 				allBricks.clear();
@@ -81,7 +85,7 @@ int main() {
 			}
 			continue;
 		} else if (victory) {
-			SDL_Rect victoryTextDst = { screenWidth / 2, screenHeight / 2, victoryTextSurface->w, victoryTextSurface->h };
+			SDL_Rect victoryTextDst = { screenWidth / 3, screenHeight / 2, victoryTextSurface->w, victoryTextSurface->h };
 			DrawText(victoryTextTexture, NULL, victoryTextDst);
 			if (GetKeyPressed(SDL_SCANCODE_SPACE)) {
 				allBricks.clear();
@@ -94,6 +98,11 @@ int main() {
 
 		SDL_SetRenderDrawColor(render, 25, 25, 40, 255);
 		SDL_RenderClear(render);
+		if (!projectile.alive) {
+			SDL_Rect startTextDst = { screenWidth / 3, screenHeight / 2, startTextSurface->w, startTextSurface->h };
+			DrawText(startTextTexture, NULL, startTextDst);
+		}
+
 		for (int i = 0; i < allBricks.size(); i++) {
 			allBricks[i]->Draw();
 		}
@@ -104,10 +113,6 @@ int main() {
 
 		projectile.Update();
 		projectile.Draw();
-
-		animTime += deltaTime;
-		//cow.Draw((int)(animTime * 23) % 21, 100, 100);
-
 
 		SDL_RenderPresent(render);
 		SDL_Delay(16);

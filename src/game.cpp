@@ -6,6 +6,7 @@ bool victory = false;
 int screenWidth = 800;
 int screenHeight = 600;
 
+
 int brickAmount = 0;
 int bricksDestroyed = 0;
 
@@ -19,7 +20,9 @@ Player player;
 Projectile projectile;
 
 Sprite playerSprite;
-Sprite ballSprite;
+
+SpriteSheet ballSpriteSheet;
+SpriteSheet blockSheet;
 
 void CreateLevel(std::array<std::array<GridTile, gridSizeY>, gridSizeX>& grid) {
 	const unsigned int brickTypeAmount = (int)BrickType::Count;
@@ -44,4 +47,5 @@ void RestartGame() {
 	victory = false;
 	gameOver = false;
 	bricksDestroyed = 0;
+	player.x = screenWidth / 2;
 }

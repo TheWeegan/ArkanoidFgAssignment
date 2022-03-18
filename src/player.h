@@ -1,4 +1,5 @@
 #pragma once
+#include <random>
 
 struct Player {
 	float x = 400.f;
@@ -9,4 +10,6 @@ struct Player {
 
 	void Update();
 	void Draw();
+
+	std::random_device randomSeed;
 };

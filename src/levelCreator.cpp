@@ -75,7 +75,7 @@ void LevelCreator::DrunkardWalk(std::array<std::array<GridTile, gridSizeY>, grid
 					grid[currentTileX][currentTileY].tileType = TileType::NormalBlockPlaced;
 					float posX = grid[currentTileX][currentTileY].positionX;
 					float posY = grid[currentTileX][currentTileY].positionY;
-					if (currentFloorCount % 3 == 0 && !IsSurrounded(grid, newTileX, newTileY, 3, TileType::MetalBlockPlaced)) {
+					if (currentFloorCount % 5 == 0 && !IsSurrounded(grid, newTileX, newTileY, 3, TileType::MetalBlockPlaced)) {
 						allBricks.emplace_back(brickFactory.CreateBrick(posX, posY, 40.f, 20.f, BrickType::MetalBrick));
 					}
 					else {

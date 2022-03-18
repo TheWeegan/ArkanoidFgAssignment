@@ -2,8 +2,9 @@
 #include "bizarreEngine.h"
 #include "collision.h"
 
+
 std::array<std::array<GridTile, gridSizeY>, gridSizeX> GridHandler::CreateGrid() {
-	float positionX = 10.f;
+	float positionX = 20.f;
 	float positionY = 10.f;
 
 	for (int y = 0; y < gridSizeY; y++) {
@@ -15,7 +16,7 @@ std::array<std::array<GridTile, gridSizeY>, gridSizeX> GridHandler::CreateGrid()
 			grid[x][y].tileType = TileType::Empty;
 			positionX += tileSizeX;			
 		}
-		positionX = 10.f;
+		positionX = 20.f;
 		positionY += tileSizeY;
 	}
 	return grid;

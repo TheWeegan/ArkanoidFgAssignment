@@ -60,9 +60,7 @@ void TheBrick::Draw() {
 	if (!brick.alive) {
 		return;
 	}
-	SDL_SetRenderDrawColor(render, brick.r, brick.g, brick.b, brick.a);
-	AABB box = AABB::makeFromPositionSize(brick.x, brick.y, brick.w, brick.h);
-	FillBox(box);
+	blockSheet.Draw((int)brick.brickType, brick.x - (brick.w / 2), brick.y - (brick.h / 2));
 }
 
 const BrickStruct TheBrick::GetBrick() const {

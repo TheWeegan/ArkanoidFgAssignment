@@ -9,6 +9,7 @@
 #include "grid.h"
 #include "levelCreator.h"
 #include "sprite.h"
+#include "spriteSheet.h"
 
 #define ProjectileMax 20
 #define BrickMax 8
@@ -32,7 +33,9 @@ extern Player player;
 extern Projectile projectile;
 
 extern Sprite playerSprite;
-extern Sprite ballSprite;
+
+extern SpriteSheet ballSpriteSheet;
+extern SpriteSheet blockSheet;
 
 extern void CreateLevel(std::array<std::array<GridTile, gridSizeY>, gridSizeX>& grid);
 extern void RestartGame();

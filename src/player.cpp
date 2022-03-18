@@ -13,16 +13,15 @@ void Player::Update() {
 	
 	if(GetKeyPressed(SDL_SCANCODE_SPACE) && !projectile.alive) {
 		projectile.alive = true;
-		
-		projectile.velocityX = -50.f;
+		while (projectile.velocityX > -25.f && projectile.velocityX < 25.f) {
+			std::default_random_engine randomEngine{ randomSeed() };
+			std::uniform_real_distribution<float> randomDist(-100.f, 100.f);
+			projectile.velocityX = randomDist(randomEngine);
+		}
 		projectile.velocityY = -200.f;
 	}
 }
 
 void Player::Draw() {
-	SDL_SetRenderDrawColor(render, 0, 50, 25, 255);
-	SDL_Rect rect = { (int)x - player.w / 2,(int)y - player.h / 2, (int)w, (int)h};
-	SDL_RenderFillRect(render, &rect);
-
-	//playerSprite.DrawCentered((int)x, (int)y);
+	playerSprite.DrawCentered((int)x, (int)y);
 }
