@@ -30,7 +30,7 @@ int main() {
 	SDL_Surface* victoryTextSurface = TTF_RenderText_Solid(font, "Eh, it's okay", {255, 255, 255, 255});
 	SDL_Texture* victoryTextTexture = SDL_CreateTextureFromSurface(render, victoryTextSurface);
 
-	SDL_Surface* startTextSurface = TTF_RenderText_Solid(font, "Press space to restart", { 255, 255, 255, 255 });
+	SDL_Surface* startTextSurface = TTF_RenderText_Solid(font, "Press space to start", { 255, 255, 255, 255 });
 	SDL_Texture* startTextTexture = SDL_CreateTextureFromSurface(render, startTextSurface);
 
 	std::array<std::array<GridTile, gridSizeY>, gridSizeX> theGrid = gridHandler.CreateGrid();
